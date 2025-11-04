@@ -38,6 +38,9 @@ pom.xml.versionsBackup
 # Screenshots
 screenshots/
 
+# TestNG
+test-output/
+
 # OS
 .DS_Store
 Thumbs.db
