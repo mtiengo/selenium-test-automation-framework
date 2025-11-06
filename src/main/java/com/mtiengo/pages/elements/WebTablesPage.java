@@ -134,10 +134,12 @@ public class WebTablesPage extends ElementsPage {
         }
     }
 
+    // For future use
     public boolean emailFieldHasValidationError() {
         return hasValidationError(registrationEmailField);
     }
 
+    // For future use
     public boolean ageFieldHasValidationError() {
         return hasValidationError(registrationAgeField);
     }

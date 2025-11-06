@@ -2,6 +2,7 @@ package com.mtiengo.pages;
 
 import com.mtiengo.base.BasePage;
 import com.mtiengo.pages.elements.ElementsPage;
+import com.mtiengo.pages.forms.FormsPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -22,5 +23,11 @@ public class HomePage extends BasePage {
         scrollToElement(elementsCard);
         click(elementsCard);
         return new ElementsPage(driver);
+    }
+
+    public FormsPage goToForms() {
+        scrollToElement(formsCard);
+        click(formsCard);
+        return new FormsPage(driver);
     }
 }

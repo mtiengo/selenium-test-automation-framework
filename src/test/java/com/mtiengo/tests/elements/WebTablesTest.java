@@ -5,6 +5,7 @@ import com.mtiengo.tests.base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class WebTablesTest extends BaseTest {
 
@@ -18,7 +19,7 @@ public class WebTablesTest extends BaseTest {
     /**
      * Test 1: Edit a record from the table
      */
-    @Test(priority = 1)
+    @Test
     public void testEditAgeWebTable() {
         String email = "kierra@example.com";
         String expectedAge = "34";
@@ -35,7 +36,7 @@ public class WebTablesTest extends BaseTest {
     /**
      * Test 2: Add a new record and check it afterwards
      */
-    @Test(priority = 2)
+    @Test
     public void testAddNewRecord() {
         // Test data
         String firstName = "Peter";
@@ -66,7 +67,7 @@ public class WebTablesTest extends BaseTest {
     /**
      * Test 3: Delete a record from the table
      */
-    @Test(priority = 3)
+    @Test
     public void testDeleteRecord() {
         String emailToDelete = "cierra@example.com";
 
@@ -83,7 +84,7 @@ public class WebTablesTest extends BaseTest {
     /**
      * Test 4: Search functionality in the table
      */
-    @Test(priority = 4)
+    @Test
     public void testSearchInTable() {
         String searchTerm = "Alden";
 
@@ -109,7 +110,7 @@ public class WebTablesTest extends BaseTest {
     /**
      * Test 5: Searching with non-existent results
      */
-    @Test(priority = 5)
+    @Test
     public void testSearchWithNoResult() {
         String searchTerm = "NonExistentPerson";
 
@@ -123,7 +124,7 @@ public class WebTablesTest extends BaseTest {
      * Test 6: Trying to enter invalid email format
      * Validates that the form rejects invalid emails
      */
-    @Test(priority = 6)
+    @Test
     public void testAddRecordWithInvalidEmail() {
         String firstName = "Invalid";
         String lastName = "Email";
@@ -136,23 +137,27 @@ public class WebTablesTest extends BaseTest {
         webTablePage.fillRegistrationForm(firstName, lastName, invalidEmail, age, salary, department);
         webTablePage.clickSubmitButton();
 
-        Assert.assertTrue(webTablePage.isRegistrationFormOpen(),
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(webTablePage.isRegistrationFormOpen(),
                 "\n Form should remain open when email is invalid \n");
 
         // The demo website does not show visual validation errors on the email field
         // Uncomment below if testing a site that does:
 
-        // Assert.assertTrue(webTablePage.emailFieldHasValidationError(),
+        // softAssert.assertTrue(webTablePage.emailFieldHasValidationError(),
         //        "\n Email field should show validation error \n");
 
-        Assert.assertFalse(webTablePage.isRecordPresentByEmail(invalidEmail),
+        softAssert.assertFalse(webTablePage.isRecordPresentByEmail(invalidEmail),
                 "\n Record with invalid email should NOT be added \n");
+
+        softAssert.assertAll();
     }
 
     /**
      * Test 7: Trying to submit with missing required fields
      */
-    @Test(priority = 7)
+    @Test
     public void testAddRecordWithMissingFields() {
         String firstName = "Incomplete";
         // Leaving other required fields intentionally blank
@@ -170,7 +175,7 @@ public class WebTablesTest extends BaseTest {
      * Test 8: Trying to add record with invalid age
      * Validates that age field only accepts valid numeric values
      */
-    @Test(priority = 8)
+    @Test
     public void testAddRecordWithInvalidAge() {
         String firstName = "Invalid";
         String lastName = "Ageman";

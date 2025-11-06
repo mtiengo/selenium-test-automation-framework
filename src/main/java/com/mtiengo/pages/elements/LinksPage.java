@@ -1,7 +1,5 @@
 package com.mtiengo.pages.elements;
 
-import com.mtiengo.base.BasePage.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
