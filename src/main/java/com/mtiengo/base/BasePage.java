@@ -1,12 +1,11 @@
 package com.mtiengo.base;
 
-import com.mtiengo.utilities.ActionsUtility;
-import com.mtiengo.utilities.JavaScriptUtility;
-import com.mtiengo.utilities.SwitchToUtility;
+import com.mtiengo.utilities.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -31,12 +30,21 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    // Use for hidden elements in the DOM such as checkbox inputs and radio buttons
     public WebElement findPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     protected void click(By locator) {
-        find(locator).click();
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        assert element != null;
+        element.click();
+    }
+
+    protected void selectByVisibleText(By locator, String text) {
+        WebElement element = find(locator);
+        Select select = new Select(element);
+        select.selectByVisibleText(text);
     }
 
 
@@ -92,6 +100,36 @@ public class BasePage {
 
     protected void switchToParentFrame() {
         SwitchToUtility.switchToParentFrame(driver);
+    }
+
+    protected void selectReactOption(By dropDownLocator, String optionText) {
+        ReactSelectUtility.selectByText(driver, dropDownLocator, optionText);
+    }
+
+    protected String getReactSelectedOption(By dropDownLocator) {
+        return ReactSelectUtility.getSelectedOption(driver, dropDownLocator);
+    }
+
+    // ========== ModalUtility Facades ==========
+
+    protected boolean isModalDisplayed(By modalLocator) {
+        return ModalUtility.isModalDisplayed(driver, modalLocator);
+    }
+
+    protected String getModalTitle(By titleLocator) {
+        return ModalUtility.getTitle(driver, titleLocator);
+    }
+
+    protected String getModalValueByLabel(By tableLocator, String label) {
+        return ModalUtility.getValueByLabel(driver, tableLocator, label);
+    }
+
+    protected void closeModal(By closeButtonLocator) {
+        ModalUtility.close(driver, closeButtonLocator);
+    }
+
+    protected boolean waitForModalToDisappear(By modalLocator) {
+        return ModalUtility.waitForDisappear(driver, modalLocator);
     }
 }
 

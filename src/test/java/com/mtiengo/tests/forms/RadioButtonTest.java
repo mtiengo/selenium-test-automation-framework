@@ -10,6 +10,9 @@ public class RadioButtonTest extends BaseTest {
     public void testRadioButton() {
         var formsPage = homePage.goToForms().clickPracticeForm();
         formsPage.clickFemaleRadioButton();
+        formsPage.clickMaleRadioButton();
+        formsPage.clickOtherRadioButton();
+        formsPage.clickFemaleRadioButton();
 
         SoftAssert softAssert = new SoftAssert();
 
