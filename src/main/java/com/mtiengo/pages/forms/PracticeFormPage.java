@@ -33,14 +33,14 @@ public class PracticeFormPage extends FormsPage {
     }
 
     // ========== Dropdown Locators ==========
-    private final By stateDropdownSelect = By.xpath("//div[text()='Select State']");
-    private final By cityDropdownSelect = By.xpath("//div[text()='Select City']");
+    private final By stateDropdownSelect = By.id("react-select-3-input");
+    private final By cityDropdownSelect = By.id("react-select-4-input");
 
     // ========== Upload Locators ==========
     private final By uploadPictureButton = By.id("uploadPicture");
 
     // ========== Modal Locators ==========
-    private final By modal = By.className("modal-content");
+    private final By modal = By.cssSelector(".modal.fade.show");
     private final By modalTitle = By.cssSelector(".modal-title.h4");
     private final By modalTable = By.cssSelector(".table-responsive");
     private final By modalCloseButton = By.id("closeLargeModal");

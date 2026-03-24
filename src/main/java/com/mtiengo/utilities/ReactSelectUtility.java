@@ -2,6 +2,7 @@ package com.mtiengo.utilities;
 
 import com.mtiengo.base.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,17 +18,22 @@ import java.time.Duration;
 
 public class ReactSelectUtility {
 
-    public static void selectByText(WebDriver driver, By dropdownLocator, String optionText) {
+    public static void selectByText(WebDriver driver, By inputLocator, String optionText) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
-        // Click to open dropdown
-        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(dropdownLocator));
-        dropdown.click();
+        // Clicks input
+        WebElement input = wait.until(
+                ExpectedConditions.elementToBeClickable(inputLocator));
+        input.click();
 
-        // Wait and click the option
-        By optionLocator = By.xpath("//div[contains(@id, 'react-select') and text()='" + optionText + "']");
-        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
-        option.click();
+        // Confirms menu opened
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//div[contains(@id,'-option-0')]")));
+
+        // Clicks option
+        By optionLocator = By.xpath(
+                "//div[contains(@id,'-option-') and normalize-space(.)='" + optionText + "']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator)).click();
     }
 
     public static String getSelectedOption(WebDriver driver, By dropDownLocator) {

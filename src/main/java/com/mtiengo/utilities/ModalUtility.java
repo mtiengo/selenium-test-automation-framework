@@ -27,7 +27,7 @@ public class ModalUtility {
      */
     public static boolean isModalDisplayed(WebDriver driver, By modalLocator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             WebElement modal = wait.until(ExpectedConditions.visibilityOfElementLocated(modalLocator));
             return modal.isDisplayed();
         } catch (Exception e) {
@@ -67,9 +67,9 @@ public class ModalUtility {
 
     public static void close(WebDriver driver, By closeButtonLocator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closeButtonLocator));
-            closeButton.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(closeButtonLocator));
+            JavaScriptUtility.clickJS(driver, closeButtonLocator);
         } catch (Exception e) {
             System.err.println("\n Failed to close modal: " + e.getMessage() + "\n");
         }

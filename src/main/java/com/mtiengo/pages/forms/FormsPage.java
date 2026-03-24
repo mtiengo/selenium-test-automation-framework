@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public class FormsPage extends HomePage {
 
-    private final By practiceFormMenuItem = By.xpath("//li[@id='item-0']/span[text()='Practice Form']");
+    private final By practiceFormMenuItem = By.cssSelector("a[href='/automation-practice-form']");
 
     public FormsPage(WebDriver driver) {
         super(driver);
