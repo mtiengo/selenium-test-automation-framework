@@ -2,6 +2,7 @@ package com.mtiengo.base;
 
 import com.mtiengo.utilities.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -37,8 +38,8 @@ public class BasePage {
 
     protected void click(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        assert element != null;
-        element.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        JavaScriptUtility.clickJS(driver, locator);
     }
 
     protected void selectByVisibleText(By locator, String text) {

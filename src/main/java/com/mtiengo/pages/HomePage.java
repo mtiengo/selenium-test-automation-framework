@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 public class HomePage extends BasePage {
 
     // Locators
-    private final By formsCard = By.cssSelector("a[href='/forms'] .card-body h5");
-    private final By elementsCard = By.xpath("//div[@id='app']//h5[text()='Elements']");
-    private final By widgetsCard = By.xpath("//div[@id='app']//h5[text()='Widgets']");
-    private final By alertsFramesWindowsCard = By.xpath("//div[@id='app']//h5[contains(text(), 'Alerts')]");
+    private final By formsCard = By.cssSelector("a[href='/forms']");
+    private final By elementsCard = By.cssSelector("a[href='/elements']");
+    private final By widgetsCard = By.cssSelector("a[href='/widgets']"); // For future implementation
+    private final By alertsFramesWindowsCard = By.cssSelector("a[href='/alertsWindows']"); // For future implementation
 
 
     public HomePage(WebDriver driver) {

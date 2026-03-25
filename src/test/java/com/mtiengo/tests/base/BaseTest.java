@@ -7,6 +7,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import com.mtiengo.utilities.ScreenShotUtility;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import static com.mtiengo.utilities.CreateDriverUtility.createDriver;
 
@@ -21,9 +23,10 @@ public class BaseTest {
     protected HomePage homePage;
     private static final String DEMOQA_URL = "https://demoqa.com/";
 
+    @Parameters({"browser"})
     @BeforeMethod
-    public void setUp() {
-        driver = createDriver(CreateDriverUtility.Browser.CHROME); // Change browser here to test with different browsers
+    public void setUp(@Optional("chrome") String browser) {
+        driver = createDriver(CreateDriverUtility.Browser.fromString(browser));
         driver.manage().window().maximize();
         driver.get(DEMOQA_URL);
         homePage = new HomePage(driver);

@@ -7,7 +7,7 @@ import org.testng.asserts.SoftAssert;
 
 public class PracticeFormTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"smoke"})
     public void testE2EPracticeForm() {
         var practiceFormPage = homePage.goToForms().clickPracticeForm();
 

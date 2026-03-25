@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Suite" verbose="1" parallel="false" thread-count="1">
+
+    <parameter name="browser" value="chrome"/>
+
+    <test name="All Tests">
+        <packages>
+            <package name="com.mtiengo.tests.forms"/>
+            <package name="com.mtiengo.tests.elements"/>
+        </packages>
+    </test>
+
+    <!--
+    <test name="Smoke" group-by-instances="true">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="com.mtiengo.tests"/>
+        </packages>
+    </test>
+    -->
+
+
+    <listeners>
+        <listener class-name="com.mtiengo.tests.base.ExtentReportListener"/>
+    </listeners>
+
+</suite>

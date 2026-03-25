@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
  */
 public class ElementsPage extends HomePage {
 
-    private By webTablesMenuItem = By.xpath("//li[@id='item-3']/span[text()='Web Tables']");
-    private By linksMenuItem = By.xpath("//li[@id='item-5']/span[text()='Links']");
+    private By webTablesMenuItem = By.cssSelector("a[href='/webtables']");
+    private By linksMenuItem = By.cssSelector("a[href='/links']");
     private By dynamicPropertiesMenuItem = By.xpath
-            ("//li[@id='item-8']/span[text()='Dynamic Properties']");
+            ("//li[@id='item-8']/span[text()='Dynamic Properties']"); // For future implementation
     private By textBoxMenuItem = By.xpath("//li[@id='item-0']/span[text()='Text Box']");
 
     public ElementsPage(WebDriver driver) {

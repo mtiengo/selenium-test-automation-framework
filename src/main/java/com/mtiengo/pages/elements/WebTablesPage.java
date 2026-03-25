@@ -21,7 +21,7 @@ public class WebTablesPage extends ElementsPage {
     private final By registrationDepartmentField = By.id("department");
     private final By searchBox = By.id("searchBox");
     private final By submitButton = By.id("submit");
-    private final By tableRows = By.cssSelector(".rt-tbody .rt-tr-group");
+    private final By tableRows = By.cssSelector("table tbody tr");
 
     public WebTablesPage(WebDriver driver) {
         super(driver);
@@ -30,7 +30,7 @@ public class WebTablesPage extends ElementsPage {
     // ========== Edit Record Methods ==========
 
     public void clickEdit(String email) {
-        By edit = By.xpath("//div[text()='"+ email +"']//following::span[@title='Edit']");
+        By edit = By.xpath("//td[text()='" + email + "']/following::span[@title='Edit']");
         click(edit);
     }
 
@@ -43,7 +43,7 @@ public class WebTablesPage extends ElementsPage {
     }
 
     public String getTableAge(String email) {
-        By tableAge = By.xpath("//div[text()='"+ email +"']//preceding::div[1]");
+        By tableAge = By.xpath("//td[text()='" + email + "']/preceding-sibling::td[1]");
         return find(tableAge).getText();
     }
 
@@ -64,7 +64,7 @@ public class WebTablesPage extends ElementsPage {
     }
 
     public boolean isRecordPresentByEmail(String email) {
-        By recordLocator = By.xpath("//div[@class='rt-tbody']//div[text()='" + email + "']");
+        By recordLocator = By.xpath("//tbody//td[text()='" + email + "']");
         try {
             find(recordLocator);
             return true;
@@ -76,7 +76,7 @@ public class WebTablesPage extends ElementsPage {
     public String getFieldValueByEmail(String email, int fieldIndex) {
         // XPath to find the row by email, then get the specific cell
         By fieldLocator = By.xpath(
-                "//div[@class='rt-tbody']//div[text()='" + email + "']/ancestor::div[@class='rt-tr-group']//div[@class='rt-td'][" + (fieldIndex + 1) + "]"
+                "//tbody//td[text()='" + email + "']/ancestor::tr/td[" + (fieldIndex + 1) + "]"
         );
         return find(fieldLocator).getText();
     }
@@ -84,7 +84,7 @@ public class WebTablesPage extends ElementsPage {
     // ========== Delete Record Methods ==========
 
     public void clickDelete(String email) {
-        By deleteButton = By.xpath("//div[text()='"+ email +"']//following::span[@title='Delete']");
+        By deleteButton = By.xpath("//td[text()='" + email + "']/following::span[@title='Delete']");
         click(deleteButton);
     }
 

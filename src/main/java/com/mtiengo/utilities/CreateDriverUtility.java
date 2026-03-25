@@ -8,9 +8,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class CreateDriverUtility {
     public enum Browser {
-        CHROME,
-        FIREFOX,
-        EDGE
+        CHROME, FIREFOX, EDGE;
+
+        public static Browser fromString(String value) {
+            return Browser.valueOf(value.toUpperCase());
+        }
     }
 
     public static WebDriver createDriver(Browser browser) {

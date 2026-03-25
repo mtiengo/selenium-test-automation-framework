@@ -58,6 +58,7 @@ public class LinksPage extends ElementsPage {
      */
     public void clickHomeDynamicLink() {
         originalWindowHandle = getCurrentWindowHandle();
+        scrollToElement(homeDynamicLink);
         click(homeDynamicLink);
         switchToNewlyOpenedWindow(originalWindowHandle);
     }

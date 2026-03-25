@@ -13,7 +13,6 @@ public class FormsPage extends HomePage {
     }
 
     public PracticeFormPage clickPracticeForm() {
-        scrollToElement(practiceFormMenuItem);
         click(practiceFormMenuItem);
         return new PracticeFormPage(driver);
     }
