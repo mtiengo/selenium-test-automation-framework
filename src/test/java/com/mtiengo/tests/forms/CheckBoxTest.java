@@ -2,7 +2,6 @@ package com.mtiengo.tests.forms;
 
 import com.mtiengo.pages.forms.PracticeFormPage;
 import com.mtiengo.tests.base.BaseTest;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -10,7 +9,7 @@ public class CheckBoxTest extends BaseTest {
 
     @Test
     public void testCheckBox() {
-        var formsPage = homePage.goToForms().clickPracticeForm();
+        var formsPage = getHomePage().goToForms().clickPracticeForm();
         formsPage.clickHobbyCheckbox(PracticeFormPage.Hobby.SPORTS);
         formsPage.clickHobbyCheckbox(PracticeFormPage.Hobby.MUSIC);
         formsPage.clickHobbyCheckbox(PracticeFormPage.Hobby.READING);

@@ -9,7 +9,7 @@ public class PracticeFormTest extends BaseTest {
 
     @Test(groups = {"smoke"})
     public void testE2EPracticeForm() {
-        var practiceFormPage = homePage.goToForms().clickPracticeForm();
+        var practiceFormPage = getHomePage().goToForms().clickPracticeForm();
 
         // Basic Fields
         practiceFormPage.enterFirstName("Johnny");

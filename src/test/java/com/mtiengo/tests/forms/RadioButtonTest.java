@@ -8,7 +8,7 @@ public class RadioButtonTest extends BaseTest {
 
     @Test
     public void testRadioButton() {
-        var formsPage = homePage.goToForms().clickPracticeForm();
+        var formsPage = getHomePage().goToForms().clickPracticeForm();
         formsPage.clickFemaleRadioButton();
         formsPage.clickMaleRadioButton();
         formsPage.clickOtherRadioButton();

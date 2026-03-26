@@ -12,7 +12,7 @@ public class LinksTest extends BaseTest {
      */
     @Test
     public void testLinksAPICall() {
-        var linksPage = homePage.goToElements().clickLinks();
+        var linksPage = getHomePage().goToElements().clickLinks();
         linksPage.clickBadRequestLink();
         String actualResponse = linksPage.getResponse();
         Assert.assertTrue(actualResponse.contains("400"),
@@ -29,18 +29,18 @@ public class LinksTest extends BaseTest {
      */
     @Test
     public void testLinksNewTab() {
-        var linksPage = homePage.goToElements().clickLinks();
+        var linksPage = getHomePage().goToElements().clickLinks();
 
         // Save original window handle before opening new tab.
         linksPage.clickHomeLink();
 
         String currentURL = linksPage.getCurrentUrl();
-        Assert.assertTrue(currentURL.equals("https://demoqa.com/"), "\n Current URL: " + currentURL +
+        Assert.assertEquals(currentURL, "https://demoqa.com/", "\n Current URL: " + currentURL +
                 "\n Does not match expected URL: 'https://demoqa.com/' \n");
 
         linksPage.switchBackToOriginalWindow();
         String returnURL = linksPage.getCurrentUrl();
-        Assert.assertTrue(returnURL.equals("https://demoqa.com/links"), "\n Current URL: " + returnURL +
+        Assert.assertEquals(returnURL, "https://demoqa.com/links", "\n Current URL: " + returnURL +
                 "\n Did not return to original tab: 'https://demoqa.com/links' \n");
         System.out.println("Reverted to original page");
     }
