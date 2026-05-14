@@ -3,8 +3,11 @@ package com.mtiengo.utilities;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class CreateDriverUtility {
     public enum Browser {
@@ -16,23 +19,36 @@ public class CreateDriverUtility {
     }
 
     public static WebDriver createDriver(Browser browser) {
+        boolean headless = Boolean.getBoolean("headless");
+
         WebDriver driver = switch (browser) {
             case CHROME -> {
                 WebDriverManager.chromedriver().setup();
-                yield new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                if (headless) {
+                    options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
+                }
+                yield new ChromeDriver(options);
             }
             case FIREFOX -> {
                 WebDriverManager.firefoxdriver().setup();
-                yield new FirefoxDriver();
+                FirefoxOptions options = new FirefoxOptions();
+                if (headless) {
+                    options.addArguments("--headless");
+                }
+                yield new FirefoxDriver(options);
             }
             case EDGE -> {
                 WebDriverManager.edgedriver().setup();
-                yield new EdgeDriver();
+                EdgeOptions options = new EdgeOptions();
+                if (headless) {
+                    options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
+                }
+                yield new EdgeDriver(options);
             }
-            default -> throw new IllegalArgumentException("Browser not supported: " + browser);
         };
 
-        System.out.println("Running tests on: " + browser + " browser.");
+        System.out.println("Running tests on: " + browser + " browser" + (headless ? " (headless)" : "") + ".");
         return driver;
     }
 }
