@@ -35,7 +35,6 @@ public class BaseTest {
     public void setUp(@Optional("chrome") String browser) {
         WebDriver driver = createDriver(CreateDriverUtility.Browser.fromString(browser));
         DriverManager.setDriver(driver);
-        driver.manage().window().maximize();
         driver.get(DEMOQA_URL);
         homePageHolder.set(new HomePage(driver));
     }

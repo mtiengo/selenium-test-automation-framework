@@ -1,9 +1,6 @@
 package com.mtiengo.pages.forms;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 public class PracticeFormPage extends FormsPage {
 
@@ -33,8 +30,10 @@ public class PracticeFormPage extends FormsPage {
     }
 
     // ========== Dropdown Locators ==========
-    private final By stateDropdownSelect = By.id("react-select-3-input");
-    private final By cityDropdownSelect = By.id("react-select-4-input");
+    private final By stateDropdownContainer = By.xpath(
+            "//input[@id='react-select-3-input']/ancestor::div[contains(@class,'control')][1]");
+    private final By cityDropdownContainer = By.xpath(
+            "//input[@id='react-select-4-input']/ancestor::div[contains(@class,'control')][1]");
 
     // ========== Upload Locators ==========
     private final By uploadPictureButton = By.id("uploadPicture");
@@ -43,7 +42,6 @@ public class PracticeFormPage extends FormsPage {
     private final By modal = By.cssSelector(".modal.fade.show");
     private final By modalTitle = By.cssSelector(".modal-title.h4");
     private final By modalTable = By.cssSelector(".table-responsive");
-    private final By modalCloseButton = By.id("closeLargeModal");
 
     // ========== Public ENUM for checkboxes ==========
     // Better scaling and abstraction
@@ -102,7 +100,6 @@ public class PracticeFormPage extends FormsPage {
 
     // ========== Submit Methods ==========
     public void clickSubmitButton() {
-        scrollToElement(submitButton);
         click(submitButton);
     }
 
@@ -193,13 +190,11 @@ public class PracticeFormPage extends FormsPage {
     }
 
     public void selectState(String stateName) {
-        scrollToElement(stateDropdownSelect);
-        selectReactOption(stateDropdownSelect, stateName);
+        selectReactOption(stateDropdownContainer, stateName);
     }
 
     public void selectCity(String cityName) {
-        scrollToElement(cityDropdownSelect);
-        selectReactOption(cityDropdownSelect, cityName);
+        selectReactOption(cityDropdownContainer, cityName);
     }
 
     public void selectStateAndCity(StateCity stateCity, String cityName) {
@@ -210,7 +205,6 @@ public class PracticeFormPage extends FormsPage {
     // ========== Birthday Methods ==========
 
     public void enableCalendar() {
-        scrollToElement(dateOfBirthField);
         click(dateOfBirthField);
     }
 
@@ -225,7 +219,6 @@ public class PracticeFormPage extends FormsPage {
     }
 
     public void setDayValueFromCalendar(String day) {
-        scrollToElement(dayValueFromCalendar(day));
         click(dayValueFromCalendar(day));
     }
 
@@ -241,11 +234,11 @@ public class PracticeFormPage extends FormsPage {
     // ========== Subject Methods ==========
 
     public void enterSubject(String subject) {
-        scrollToElement(subjectsField);
+        click(subjectsField);
         WebElement subjectInput = find(subjectsField);
-        subjectInput.click();
         subjectInput.sendKeys(subject);
         subjectInput.sendKeys(Keys.ENTER);
+        ((JavascriptExecutor) driver).executeScript("document.activeElement.blur();");
     }
 
     // ========== Modal Methods ==========

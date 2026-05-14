@@ -1,6 +1,7 @@
 package com.mtiengo.utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class CreateDriverUtility {
+    private static final Dimension HEADLESS_WINDOW_SIZE = new Dimension(1920, 1080);
+
     public enum Browser {
         CHROME, FIREFOX, EDGE;
 
@@ -48,7 +51,15 @@ public class CreateDriverUtility {
             }
         };
 
+        if (headless) {
+            // --window-size flag is unreliable in headless=new on some Chrome builds; set via API instead.
+            driver.manage().window().setSize(HEADLESS_WINDOW_SIZE);
+        } else {
+            driver.manage().window().maximize();
+        }
+
         System.out.println("Running tests on: " + browser + " browser" + (headless ? " (headless)" : "") + ".");
+        System.out.println("Window size: " + driver.manage().window().getSize());
         return driver;
     }
 }

@@ -38,7 +38,8 @@ public class BasePage {
 
     protected void click(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center'}); window.scrollBy(0, -100);", element);
         JavaScriptUtility.clickJS(driver, locator);
     }
 
@@ -62,6 +63,10 @@ public class BasePage {
 
     protected void clickJS(By locator) {
         JavaScriptUtility.clickJS(driver, locator);
+    }
+
+    protected void removeAdOverlays() {
+        JavaScriptUtility.removeAdOverlays(driver);
     }
 
     // ========== ActionsUtility Facades ==========
