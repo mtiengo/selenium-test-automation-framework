@@ -3,6 +3,7 @@ package com.mtiengo.pages.elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class WebTablesPage extends ElementsPage {
     private final By registrationDepartmentField = By.id("department");
     private final By searchBox = By.id("searchBox");
     private final By submitButton = By.id("submit");
+    private final By tableBody = By.cssSelector("table tbody");
     private final By tableRows = By.cssSelector("table tbody tr");
 
     public WebTablesPage(WebDriver driver) {
@@ -95,12 +97,15 @@ public class WebTablesPage extends ElementsPage {
     }
 
     public int getVisibleRowCount() {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(tableBody));
+        } catch (Exception e) {
+            return 0;
+        }
         List<WebElement> rows = driver.findElements(tableRows);
         int count = 0;
-
         for (WebElement row : rows) {
-            String rowText = row.getText().trim();
-            if (!rowText.isEmpty()) {
+            if (!row.getText().trim().isEmpty()) {
                 count++;
             }
         }
@@ -145,6 +150,11 @@ public class WebTablesPage extends ElementsPage {
     }
 
     public boolean anyVisibleRowContainsText(String text) {
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(tableBody));
+        } catch (Exception e) {
+            return false;
+        }
         List<WebElement> rows = driver.findElements(tableRows);
         for (WebElement row : rows) {
             if (row.getText().toLowerCase().contains(text.toLowerCase())) {
