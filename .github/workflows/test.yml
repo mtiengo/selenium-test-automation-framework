@@ -1,0 +1,45 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [cucumber, testng]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run ${{ matrix.suite }} tests
+        run: mvn test -P ${{ matrix.suite }} -Dheadless=true
+
+      - name: Upload Extent Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report-${{ matrix.suite }}
+          path: reports/
+
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots-${{ matrix.suite }}
+          path: screenshots/
