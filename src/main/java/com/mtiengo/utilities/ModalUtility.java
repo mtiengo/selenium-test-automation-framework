@@ -2,6 +2,7 @@ package com.mtiengo.utilities;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -72,6 +73,35 @@ public class ModalUtility {
             JavaScriptUtility.clickJS(driver, closeButtonLocator);
         } catch (Exception e) {
             System.err.println("\n Failed to close modal: " + e.getMessage() + "\n");
+        }
+    }
+
+    /**
+     * Dismisses the modal by dispatching a click on the backdrop element.
+     *
+     * <p><b>SUT Bug — DemoQA issue #1:</b> The native "Close" button on the Practice Form
+     * confirmation modal ({@code #closeLargeModal}) is broken and has no effect regardless
+     * of wait strategy. Verified manually; this is a defect in the application under test,
+     * not a framework limitation.
+     *
+     * <p>Workaround: dispatching a click event directly on the root {@code .modal} element
+     * triggers Bootstrap's built-in backdrop-dismiss handler, which correctly hides the modal.
+     * To revert to the standard approach, replace the call to this method with
+     * {@link #close(WebDriver, By)} and pass the close-button locator.
+     *
+     * @param driver       WebDriver instance
+     * @param modalLocator locator for the root {@code .modal} element (not the inner dialog)
+     */
+    public static void closeByBackdropClick(WebDriver driver, By modalLocator) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement modal = wait.until(ExpectedConditions.visibilityOfElementLocated(modalLocator));
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}));",
+                    modal
+            );
+        } catch (Exception e) {
+            System.err.println("\n Failed to close modal via backdrop click: " + e.getMessage() + "\n");
         }
     }
 

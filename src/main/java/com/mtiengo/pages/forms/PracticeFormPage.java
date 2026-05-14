@@ -263,7 +263,7 @@ public class PracticeFormPage extends FormsPage {
     }
 
     public void closeSubmissionModal() {
-        closeModal(modalCloseButton);
+        closeModalByBackdropClick(modal);  // see ModalUtility.closeByBackdropClick — SUT bug, issue #1
     }
 
     public boolean isModalClosed() {

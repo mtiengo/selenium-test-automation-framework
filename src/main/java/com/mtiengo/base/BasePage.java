@@ -132,5 +132,9 @@ public class BasePage {
     protected boolean waitForModalToDisappear(By modalLocator) {
         return ModalUtility.waitForDisappear(driver, modalLocator);
     }
+
+    protected void closeModalByBackdropClick(By modalLocator) {
+        ModalUtility.closeByBackdropClick(driver, modalLocator);
+    }
 }
 
