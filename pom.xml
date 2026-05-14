@@ -12,7 +12,8 @@
 
 
     <name>Selenium Test Automation Framework</name>
-    <description>Page Object Model test automation framework using Selenium WebDriver and TestNG</description>
+    <description>Page Object Model test automation framework using Selenium WebDriver, TestNG,
+        and Cucumber</description>
 
 
     <properties>
@@ -21,8 +22,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.41.0</selenium.version>
         <testng.version>7.10.2</testng.version>
-        <webdrivermanager.version>6.3.3</webdrivermanager.version>
+        <webdrivermanager.version>6.3.4</webdrivermanager.version>
         <extentreports.version>5.1.2</extentreports.version>
+        <cucumber.version>7.34.3</cucumber.version>
+        <suiteXmlFile>testng.xml</suiteXmlFile>
     </properties>
 
 
@@ -55,6 +58,27 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>1.14.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 
@@ -77,10 +101,49 @@
                 <version>3.5.4</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>cucumber</id>
+            <properties>
+                <suiteXmlFile>src/test/resources/testng-cucumber.xml</suiteXmlFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>testng</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <suiteXmlFile>testng.xml</suiteXmlFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>all</id>
+            <properties>
+                <suiteXmlFile>testng.xml</suiteXmlFile>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>testng.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/resources/testng-cucumber.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
