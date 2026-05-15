@@ -136,6 +136,7 @@
                 <suiteXmlFile>src/test/resources/testng-cucumber.xml</suiteXmlFile>
             </properties>
         </profile>
+
         <profile>
             <id>testng</id>
             <activation>
@@ -145,6 +146,14 @@
                 <suiteXmlFile>testng.xml</suiteXmlFile>
             </properties>
         </profile>
+
+        <profile>
+            <id>api</id>
+            <properties>
+                <suiteXmlFile>src/test/resources/testng-api.xml</suiteXmlFile>
+            </properties>
+        </profile>
+
         <profile>
             <id>all</id>
             <properties>
@@ -159,6 +168,7 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>testng.xml</suiteXmlFile>
                                 <suiteXmlFile>src/test/resources/testng-cucumber.xml</suiteXmlFile>
+                                <suiteXmlFile>src/test/resources/testng-api.xml</suiteXmlFile>
                             </suiteXmlFiles>
                         </configuration>
                     </plugin>
