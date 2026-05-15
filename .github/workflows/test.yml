@@ -15,7 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [cucumber, testng]
+        suite: [cucumber, testng, api]
+
 
     steps:
       - uses: actions/checkout@v4
@@ -43,3 +44,4 @@ jobs:
         with:
           name: failure-screenshots-${{ matrix.suite }}
           path: screenshots/
+          if-no-files-found: ignore
