@@ -1,11 +1,19 @@
 package com.mtiengo.tests.forms;
 
+import com.mtiengo.exceptions.ModalCloseException;
 import com.mtiengo.pages.forms.PracticeFormPage;
 import com.mtiengo.tests.base.BaseTest;
+import com.mtiengo.utilities.ModalUtility;
+import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class PracticeFormTest extends BaseTest {
+
+    private static final Logger log = LoggerFactory.getLogger(PracticeFormTest.class);
+    private static final By CLOSE_BUTTON = By.id("closeLargeModal");
 
     @Test(groups = {"smoke"})
     public void testE2EPracticeForm() {
@@ -92,8 +100,9 @@ public class PracticeFormTest extends BaseTest {
                 "\n State and City mismatch \n");
 
 
-        // Close modal
-        practiceFormPage.closeSubmissionModal();
+        // Close modal — try the real close button first (real UX path); fall back
+        // to backdrop click only if it fails. See issue #1 for the SUT bug context.
+        closeModalWithFallback(practiceFormPage);
 
         // Verify modal closed
         softAssert.assertTrue(practiceFormPage.isModalClosed(),
@@ -101,5 +110,23 @@ public class PracticeFormTest extends BaseTest {
 
 
         softAssert.assertAll();
+    }
+
+    private void closeModalWithFallback(PracticeFormPage practiceFormPage) {
+        ModalUtility.close(getDriver(), CLOSE_BUTTON);
+
+        if (practiceFormPage.isModalClosed()) {
+            log.info("Modal closed via close button (happy path)");
+            return;
+        }
+
+        log.warn("Close button did not close modal - falling back to backdrop click. " +
+                "Known issue: https://github.com/mtiengo/selenium-test-automation-framework/issues/1");
+        practiceFormPage.closeSubmissionModal();
+
+        if (!practiceFormPage.isModalClosed()) {
+            throw new ModalCloseException(
+                    "Modal failed to close via both close button and backdrop");
+        }
     }
 }
