@@ -1,6 +1,8 @@
 package com.mtiengo.utilities;
 
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
@@ -9,6 +11,8 @@ import java.util.Set;
  * Utility class for switching between windows, tabs, frames and alerts.
  */
 public class SwitchToUtility {
+
+    private static final Logger log = LoggerFactory.getLogger(SwitchToUtility.class);
 
     /**
      * Helper method to reduce driver.switchTo() calls and improve readability
@@ -29,12 +33,12 @@ public class SwitchToUtility {
     public static void switchToNewlyOpenedWindow(WebDriver driver, String originalHandle) {
         Set<String> allHandles = driver.getWindowHandles();
         // In Selenium, windows and tabs are both treated as window handles
-        System.out.println("Number of open windows/tabs: " + allHandles.size());
+        log.debug("Number of open windows/tabs: {}", allHandles.size());
 
         for (String handle : allHandles) {
             if (!handle.equals(originalHandle)) {
                 switchToWindow(driver, handle);
-                System.out.println("Switched to a new window/tab with handle: " + handle);
+                log.debug("Switched to a new window/tab with handle: {}", handle);
                 return;
             }
         }
@@ -42,7 +46,7 @@ public class SwitchToUtility {
 
     public static void switchBackToOriginalWindow(WebDriver driver, String originalHandle) {
         switchToWindow(driver, originalHandle);
-        System.out.println("Switched back to original window/tab with handle: " + originalHandle);
+        log.debug("Switched back to original window/tab with handle: {}", originalHandle);
     }
 
     public static void switchToFrameByIndex(WebDriver driver, int index) {

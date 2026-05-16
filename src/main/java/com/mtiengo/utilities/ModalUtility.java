@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
  * extracting data, and closing.
  */
 public class ModalUtility {
+
+    private static final Logger log = LoggerFactory.getLogger(ModalUtility.class);
 
 
     /**
@@ -72,22 +76,22 @@ public class ModalUtility {
             wait.until(ExpectedConditions.elementToBeClickable(closeButtonLocator));
             JavaScriptUtility.clickJS(driver, closeButtonLocator);
         } catch (Exception e) {
-            System.err.println("\n Failed to close modal: " + e.getMessage() + "\n");
+            log.error("Failed to close modal through close button", e);
         }
     }
 
     /**
      * Dismisses the modal by dispatching a click on the backdrop element.
      *
-     * <p><b>SUT Bug — DemoQA issue #1:</b> The native "Close" button on the Practice Form
-     * confirmation modal ({@code #closeLargeModal}) is broken and has no effect regardless
-     * of wait strategy. Verified manually; this is a defect in the application under test,
-     * not a framework limitation.
+     * <p>Dispatching a click event directly on the root {@code .modal} element
+     * triggers Bootstrap's built-in backdrop-dismiss handler, which correctly
+     * hides the modal.
      *
-     * <p>Workaround: dispatching a click event directly on the root {@code .modal} element
-     * triggers Bootstrap's built-in backdrop-dismiss handler, which correctly hides the modal.
-     * To revert to the standard approach, replace the call to this method with
-     * {@link #close(WebDriver, By)} and pass the close-button locator.
+     * <p>Intended as a fallback path when {@link #close(WebDriver, By)} cannot
+     * dismiss the dialog — see DemoQA issue #1, where the Practice Form
+     * confirmation modal's native close button ({@code #closeLargeModal}) is
+     * broken regardless of wait strategy. Verified manually; this is a defect
+     * in the application under test, not a framework limitation.
      *
      * @param driver       WebDriver instance
      * @param modalLocator locator for the root {@code .modal} element (not the inner dialog)
@@ -101,7 +105,7 @@ public class ModalUtility {
                     modal
             );
         } catch (Exception e) {
-            System.err.println("\n Failed to close modal via backdrop click: " + e.getMessage() + "\n");
+            log.error("Failed to close modal via backdrop click", e);
         }
     }
 

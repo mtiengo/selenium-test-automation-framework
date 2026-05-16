@@ -4,6 +4,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ScreenShotUtility {
 
+    private static final Logger log = LoggerFactory.getLogger(ScreenShotUtility.class);
     private static final String SCREENSHOT_DIR = System.getProperty("user.dir") + "/screenshots/";
 
     public static void captureScreenshot(WebDriver driver, String testName) {
@@ -28,9 +31,9 @@ public class ScreenShotUtility {
 
         try {
             FileHandler.copy(source, destination);
-            System.out.println("Screenshot at: " + destination.getAbsolutePath());
+            log.info("Screenshot at: {}", destination.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Screenshot failed: " + e.getMessage());
+            log.error("Screenshot failed", e);
         }
     }
 }

@@ -9,8 +9,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CreateDriverUtility {
+    private static final Logger log = LoggerFactory.getLogger(CreateDriverUtility.class);
     private static final Dimension HEADLESS_WINDOW_SIZE = new Dimension(1920, 1080);
 
     public enum Browser {
@@ -58,8 +61,8 @@ public class CreateDriverUtility {
             driver.manage().window().maximize();
         }
 
-        System.out.println("Running tests on: " + browser + " browser" + (headless ? " (headless)" : "") + ".");
-        System.out.println("Window size: " + driver.manage().window().getSize());
+        log.info("Running tests on: {} browser{}.", browser, headless ? " (headless)" : "");
+        log.debug("Window size: {}", driver.manage().window().getSize());
         return driver;
     }
 }

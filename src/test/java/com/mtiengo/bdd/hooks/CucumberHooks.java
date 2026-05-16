@@ -10,6 +10,8 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.mtiengo.utilities.CreateDriverUtility.createDriver;
 
@@ -20,12 +22,13 @@ import static com.mtiengo.utilities.CreateDriverUtility.createDriver;
  */
 public class CucumberHooks {
 
+    private static final Logger log = LoggerFactory.getLogger(CucumberHooks.class);
     private static final String DEMOQA_URL = "https://demoqa.com/";
     private static final ThreadLocal<HomePage> homePageHolder = new ThreadLocal<>();
 
     @Before(order = 0)
     public void logStart(Scenario scenario) {
-        System.out.println("Starting: " + scenario.getName());
+        log.info("Starting: {}", scenario.getName());
     }
 
     @Before(order = 1)
@@ -64,6 +67,6 @@ public class CucumberHooks {
     @After(order = 0)
     public void logEnd(Scenario scenario) {
         String status = scenario.isFailed() ? "FAIL" : "PASS";
-        System.out.println(status + ": " + scenario.getName());
+        log.info("{}: {}", status, scenario.getName());
     }
 }

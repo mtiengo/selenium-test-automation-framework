@@ -2,11 +2,15 @@ package com.mtiengo.pages.elements;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Page Object representing the Links subsection
  */
 public class LinksPage extends ElementsPage {
+
+    private static final Logger log = LoggerFactory.getLogger(LinksPage.class);
 
     // ========== Locators - API Call Links ==========
     private final By badRequestLink = By.id("bad-request");
@@ -42,14 +46,14 @@ public class LinksPage extends ElementsPage {
     public void clickHomeLink() {
         // Save original window handle before clicking
         originalWindowHandle = getCurrentWindowHandle();
-        System.out.println("Original window handle saved: " + originalWindowHandle);
+        log.debug("Original window handle saved: {}", originalWindowHandle);
 
         // Click link (opens new tab)
         click(homeLink);
 
         // Switch to new tab
         switchToNewlyOpenedWindow(originalWindowHandle);
-        System.out.println("Switched to new tab");
+        log.debug("Switched to new tab");
     }
 
     /**
@@ -69,7 +73,7 @@ public class LinksPage extends ElementsPage {
     public void switchBackToOriginalWindow() {
         if (originalWindowHandle != null) {
             switchBackToOriginalWindow(originalWindowHandle);
-            System.out.println("Switched back to original window");
+            log.debug("Switched back to original window");
         }
     }
 

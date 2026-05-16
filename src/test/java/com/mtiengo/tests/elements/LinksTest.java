@@ -42,6 +42,5 @@ public class LinksTest extends BaseTest {
         String returnURL = linksPage.getCurrentUrl();
         Assert.assertEquals(returnURL, "https://demoqa.com/links", "\n Current URL: " + returnURL +
                 "\n Did not return to original tab: 'https://demoqa.com/links' \n");
-        System.out.println("Reverted to original page");
     }
 }
